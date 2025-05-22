@@ -1,0 +1,138 @@
+flowchart TD
+    A[User Input Received] --> B[Initialize Session]
+    B --> C{Session Active?}
+    C -->|No| D[Start New Session]
+    C -->|Yes| E[Validate Input]
+    
+    D --> D1[Generate Session ID]
+    D1 --> D2[Display Disclaimer]
+    D2 --> D3[Load Guardrail Patterns]
+    D3 --> E
+    
+    E --> E1[Check PII Exposure]
+    E1 --> E2[Check Financial Info]
+    E2 --> E3[Check Medical Requests]
+    E3 --> E4[Check Booking Attempts]
+    E4 --> F{Violations Found?}
+    
+    F -->|Yes| G[Determine Risk Level]
+    G --> G1{Risk Level?}
+    
+    G1 -->|CRITICAL| H1[Financial Violation Handler]
+    G1 -->|HIGH| H2[PII Violation Handler]
+    G1 -->|MEDIUM| H3[Medical/Booking Handler]
+    G1 -->|LOW| H4[General Warning Handler]
+    
+    H1 --> H1a[Block Request]
+    H1a --> H1b[Redirect to Secure Platforms]
+    H1b --> H1c[Log Critical Violation]
+    H1c --> I[Generate Violation Response]
+    
+    H2 --> H2a[Sanitize PII]
+    H2a --> H2b[Mask Sensitive Data]
+    H2b --> I
+    
+    H3 --> H3a[Redirect to Professionals]
+    H3a --> H3b[Provide Official Sources]
+    H3b --> I
+    
+    H4 --> H4a[Issue Warning]
+    H4a --> H4b[Continue Processing]
+    H4b --> J[Sanitize Input]
+    
+    F -->|No| J[Sanitize Input]
+    J --> K[Build Safe LLM Prompt]
+    
+    K --> K1[Add Safety Instructions]
+    K1 --> K2[Set Conservative Parameters]
+    K2 --> K3[Add Stop Sequences]
+    K3 --> L[Call LLM API]
+    
+    L --> M{API Call Success?}
+    M -->|No| N[Generate Fallback Response]
+    M -->|Yes| O[Validate LLM Response]
+    
+    O --> O1[Check for Dangerous Phrases]
+    O1 --> O2[Verify Safety Disclaimers]
+    O2 --> P{Response Safe?}
+    
+    P -->|No| N
+    P -->|Yes| Q[Post-Process Response]
+    
+    Q --> Q1[Add Official Sources]
+    Q1 --> Q2[Include Relevant Warnings]
+    Q2 --> Q3[Format Final Response]
+    Q3 --> R[Log Interaction]
+    
+    R --> R1[Hash User Input]
+    R1 --> R2[Record Metadata Only]
+    R2 --> R3[No PII in Logs]
+    R3 --> S[Return Response to User]
+    
+    I --> T{Escalation Required?}
+    T -->|Yes| U[Flag for Human Review]
+    T -->|No| V[Return Guardrail Response]
+    
+    U --> U1[Generate Escalation Ticket]
+    U1 --> U2[Notify Human Agents]
+    U2 --> V
+    
+    N --> N1[System Error Response]
+    N1 --> N2[Provide Manual Alternatives]
+    N2 --> N3[Escalate Technical Issue]
+    N3 --> V
+    
+    S --> W{Continue Session?}
+    V --> W
+    W -->|Yes| X[Wait for Next Input]
+    W -->|No| Y[End Session]
+    
+    X --> A
+    Y --> Y1[Clear Session Data]
+    Y1 --> Y2[Clear Conversation Log]
+    Y2 --> Y3[Reset Session ID]
+    Y3 --> Z[Session Terminated]
+    
+    %% Styling for different risk levels
+    classDef critical fill:#ff6b6b,stroke:#d63031,stroke-width:3px,color:#fff
+    classDef high fill:#fd79a8,stroke:#e84393,stroke-width:2px,color:#fff
+    classDef medium fill:#fdcb6e,stroke:#e17055,stroke-width:2px,color:#000
+    classDef low fill:#55a3ff,stroke:#0984e3,stroke-width:2px,color:#fff
+    classDef safe fill:#00b894,stroke:#00a085,stroke-width:2px,color:#fff
+    classDef process fill:#ddd,stroke:#999,stroke-width:1px,color:#000
+    
+    class H1,H1a,H1b,H1c critical
+    class H2,H2a,H2b high
+    class H3,H3a,H3b,H4,H4a medium
+    class Q,Q1,Q2,Q3,S safe
+    class E,E1,E2,E3,E4,K,K1,K2,K3,O,O1,O2,R,R1,R2,R3 process
+    
+    %% Add subgraph for validation checks
+    subgraph Validation ["Input Validation Layer"]
+        E1
+        E2
+        E3
+        E4
+    end
+    
+    %% Add subgraph for violation handlers
+    subgraph Handlers ["Violation Handlers"]
+        H1
+        H2
+        H3
+        H4
+    end
+    
+    %% Add subgraph for LLM processing
+    subgraph LLMProcess ["LLM Processing"]
+        K
+        L
+        O
+    end
+    
+    %% Add subgraph for response processing
+    subgraph ResponseProcess ["Response Processing"]
+        Q
+        R
+        S
+    end
