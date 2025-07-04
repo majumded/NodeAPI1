@@ -10,7 +10,7 @@ graph TB
         %% AWS Shield Advanced - OPTIONAL
         SHIELD[AWS Shield Advanced<br/>Enhanced DDoS Protection<br/>24/7 DRT Support<br/>💡 OPTIONAL]
         
-        %% Route 53 with Health Checks - Health Checks Optional
+        %% Route 53 with Health Checks
         R53[Route 53<br/>DNS Management<br/>Health Checks & Failover<br/>✅ MANDATORY<br/>💡 Health Checks Optional]
         
         %% Internet Gateway and Load Balancer
@@ -27,23 +27,23 @@ graph TB
         %% Enhanced Monitoring and Alerting
         CW[CloudWatch<br/>Monitoring & Logging<br/>DDoS Metrics<br/>✅ MANDATORY]
         SNS[SNS Topics<br/>DDoS Alerts<br/>Incident Response<br/>✅ MANDATORY]
-        LAMBDA[Lambda Functions<br/>Auto-Response<br/>DDoS Mitigation<br/>💡 Auto-Response Optional]
+        LAMBDA[Lambda Functions<br/>Auto-Response<br/>DDoS Mitigation<br/>✅ MANDATORY]
         
         %% VPC with Multi-AZ Subnets
-        subgraph VPC["🔐 VPC - Virtual Private Cloud (Multi-AZ) - ✅ MANDATORY"]
+        subgraph VPC["🔐 VPC - Virtual Private Cloud"]
             %% Production Environment - Multi-AZ
-            subgraph PROD_AZ1["🔵 Production AZ-1 (Private) - ✅ MANDATORY"]
+            subgraph PROD_AZ1["🔵 Production AZ-1"]
                 RTF_PROD_AZ1[MuleSoft RTF Production<br/>EKS Cluster AZ-1<br/>Auto-scaling Group<br/>✅ MANDATORY]
                 SOLACE_PROD_AZ1[Solace PubSub+ Production<br/>Event Mesh AZ-1<br/>HA Cluster Node<br/>✅ MANDATORY]
             end
             
-            subgraph PROD_AZ2["🔵 Production AZ-2 (Private) - ✅ MANDATORY"]
+            subgraph PROD_AZ2["🔵 Production AZ-2"]
                 RTF_PROD_AZ2[MuleSoft RTF Production<br/>EKS Cluster AZ-2<br/>Auto-scaling Group<br/>✅ MANDATORY]
                 SOLACE_PROD_AZ2[Solace PubSub+ Production<br/>Event Mesh AZ-2<br/>HA Cluster Node<br/>✅ MANDATORY]
             end
             
             %% Pre-Production Environment
-            subgraph PREPROD_SUBNET["🟡 Pre-Production Subnet (Private) - ✅ MANDATORY"]
+            subgraph PREPROD_SUBNET["🟡 Pre-Production Subnet"]
                 RTF_PREPROD[MuleSoft RTF Pre-Production<br/>EKS Cluster<br/>Development<br/>✅ MANDATORY]
                 SOLACE_PREPROD[Solace PubSub+ Pre-Production<br/>Event Mesh<br/>Test Environment<br/>✅ MANDATORY]
             end
@@ -51,54 +51,54 @@ graph TB
             %% Auto Scaling Configuration
             ASG[Auto Scaling Groups<br/>Dynamic Scaling<br/>Surge Capacity<br/>✅ MANDATORY]
             
-            %% VPC Endpoints and Networking - OPTIONAL
+            %% VPC Endpoints and Networking
             VPC_ENDPOINT[VPC Endpoint<br/>PrivateLink<br/>💡 OPTIONAL]
             NAT_GW_AZ1[NAT Gateway AZ-1<br/>Outbound Internet<br/>✅ MANDATORY]
             NAT_GW_AZ2[NAT Gateway AZ-2<br/>Outbound Internet<br/>✅ MANDATORY]
             TGW[Transit Gateway<br/>Inter-VPC Routing<br/>💡 OPTIONAL]
         end
         
-        %% Connectivity to On-Premise - OPTIONAL
+        %% Connectivity to On-Premise
         VPN[VPN Gateway<br/>Site-to-Site VPN<br/>Redundant Tunnels<br/>✅ MANDATORY]
         DX[Direct Connect<br/>Dedicated Connection<br/>Backup Circuit<br/>💡 OPTIONAL]
         
-        %% Additional Security Services - OPTIONAL
+        %% Additional Security Services
         GUARDDUTY[GuardDuty<br/>Threat Detection<br/>DDoS Anomaly Detection<br/>💡 OPTIONAL]
         CONFIG[AWS Config<br/>Compliance Monitoring<br/>Security Baselines<br/>💡 OPTIONAL]
         
-        %% Network ACLs - OPTIONAL
+        %% Network ACLs
         NACL[Network ACLs<br/>Stateless Firewall<br/>Defense in Depth<br/>💡 OPTIONAL]
         
-        %% VPC Flow Logs - OPTIONAL
+        %% VPC Flow Logs
         FLOW_LOGS[VPC Flow Logs<br/>Network Monitoring<br/>Security Analysis<br/>💡 OPTIONAL]
         
-        %% Additional Monitoring - OPTIONAL
+        %% Additional Monitoring
         XRAY[X-Ray Tracing<br/>Distributed Tracing<br/>Performance Analysis<br/>💡 OPTIONAL]
         
-        %% Origin Shield - OPTIONAL
+        %% Origin Shield
         ORIGIN_SHIELD[Origin Shield<br/>Regional Caching<br/>Reduced Origin Load<br/>💡 OPTIONAL]
         
-        %% Lambda@Edge - OPTIONAL
+        %% Lambda@Edge
         LAMBDA_EDGE[Lambda@Edge<br/>Edge Computing<br/>Reduced Latency<br/>💡 OPTIONAL]
     end
     
-    %% MuleSoft Hosted Cloud (Outside AWS)
-    subgraph MULE_CLOUD["☁️ MuleSoft Hosted Cloud - ✅ MANDATORY"]
+    %% MuleSoft Hosted Cloud
+    subgraph MULE_CLOUD["☁️ MuleSoft Hosted Cloud"]
         CH2[CloudHub 2<br/>Managed Runtime<br/>Auto-scaling<br/>Built-in DDoS Protection<br/>✅ MANDATORY]
         ANYPOINT[Anypoint Platform<br/>Control Plane<br/>Management Console<br/>✅ MANDATORY]
         EXCHANGE[Anypoint Exchange<br/>API Catalog<br/>✅ MANDATORY]
     end
     
     %% On-Premise Data Center
-    subgraph ONPREM["🏢 RSG Data Center (On-Premise) - ✅ MANDATORY"]
+    subgraph ONPREM["🏢 RSG Data Center"]
         CORP_APPS[Corporate Applications<br/>Legacy Systems<br/>✅ MANDATORY]
         DB[Enterprise Databases<br/>Oracle, SQL Server<br/>✅ MANDATORY]
         LDAP[Active Directory<br/>LDAP Services<br/>✅ MANDATORY]
         FILE_SYS[File Systems<br/>Shared Storage<br/>✅ MANDATORY]
     end
     
-    %% Backup and DR Services - OPTIONAL
-    subgraph BACKUP_DR["🔄 Backup & DR (Optional) - 💡 OPTIONAL"]
+    %% Backup and DR Services
+    subgraph BACKUP_DR["🔄 Backup & DR"]
         CROSS_REGION[Cross-Region Backup<br/>Disaster Recovery<br/>💡 OPTIONAL]
         AWS_BACKUP[AWS Backup<br/>Centralized Backup<br/>💡 OPTIONAL]
         DR_SITE[DR Site<br/>Secondary Region<br/>💡 OPTIONAL]
@@ -121,7 +121,7 @@ graph TB
     APIGW --> VPC_ENDPOINT
     VPC_ENDPOINT --> CH2
     
-    %% Internal RTF to Solace Connections (Multi-AZ)
+    %% Internal RTF to Solace Connections
     RTF_PROD_AZ1 <--> SOLACE_PROD_AZ1
     RTF_PROD_AZ2 <--> SOLACE_PROD_AZ2
     RTF_PREPROD <--> SOLACE_PREPROD
@@ -176,11 +176,6 @@ graph TB
     SG --> SOLACE_PROD_AZ2
     SG --> SOLACE_PREPROD
     
-    %% Network ACLs Integration (Optional)
-    NACL -.-> RTF_PROD_AZ1
-    NACL -.-> RTF_PROD_AZ2
-    NACL -.-> RTF_PREPROD
-    
     %% Enhanced Monitoring
     CW --> RTF_PROD_AZ1
     CW --> RTF_PROD_AZ2
@@ -191,14 +186,6 @@ graph TB
     CW --> ALB
     CW --> APIGW
     CW --> CF
-    
-    %% Optional Monitoring Integration
-    XRAY -.-> RTF_PROD_AZ1
-    XRAY -.-> RTF_PROD_AZ2
-    XRAY -.-> RTF_PREPROD
-    
-    %% VPC Flow Logs Integration (Optional)
-    FLOW_LOGS -.-> VPC
     
     %% DDoS Response Automation
     CW --> SNS
@@ -217,18 +204,6 @@ graph TB
     NAT_GW_AZ1 --> IGW
     NAT_GW_AZ2 --> IGW
     
-    %% Lambda@Edge Integration (Optional)
-    LAMBDA_EDGE -.-> CF
-    
-    %% Backup and DR Connections (Optional)
-    CROSS_REGION -.-> RTF_PROD_AZ1
-    CROSS_REGION -.-> RTF_PROD_AZ2
-    CROSS_REGION -.-> SOLACE_PROD_AZ1
-    CROSS_REGION -.-> SOLACE_PROD_AZ2
-    AWS_BACKUP -.-> RTF_PROD_AZ1
-    AWS_BACKUP -.-> RTF_PROD_AZ2
-    DR_SITE -.-> CROSS_REGION
-    
     %% Styling
     classDef mandatoryAws fill:#ff9900,stroke:#e47911,stroke-width:3px,color:#fff
     classDef mandatoryMule fill:#00A0E6,stroke:#0066CC,stroke-width:3px,color:#fff
@@ -245,8 +220,7 @@ graph TB
     class SOLACE_PROD_AZ1,SOLACE_PROD_AZ2,SOLACE_PREPROD mandatorySolace
     class CORP_APPS,DB,LDAP,FILE_SYS mandatoryOnPrem
     class EXT mandatoryExternal
-    class CF,SNS mandatoryDdos
-    class LAMBDA mandatoryDdos
+    class CF,SNS,LAMBDA mandatoryDdos
     
     %% Optional Components
     class SHIELD,GUARDDUTY,CONFIG,TGW,DX,VPC_ENDPOINT,NACL,FLOW_LOGS,XRAY,ORIGIN_SHIELD,LAMBDA_EDGE optionalService
